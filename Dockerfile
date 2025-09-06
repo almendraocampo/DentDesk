@@ -1,17 +1,13 @@
-# Usamos PHP 8.3 con servidor Apache
-FROM php:8.3-apache
+# Uso la imagen oficial de PHP con Apache
+FROM php:8.2-apache
 
-# Habilitar extensiones necesarias
-RUN docker-php-ext-install pdo pdo_sqlite sqlite3
+# Instalo dependencias necesarias para SQLite y otras extensiones
+RUN apt-get update && apt-get install -y \
+    libsqlite3-dev \
+    && docker-php-ext-install pdo pdo_sqlite
 
-# Copiar todo el proyecto al contenedor
+# Copio los archivos de la app al contenedor
 COPY . /var/www/html/
 
-# Establecer permisos (opcional)
-RUN chown -R www-data:www-data /var/www/html/
-
-# Exponer el puerto 80
+# Puerto 80
 EXPOSE 80
-
-# Instrucción por defecto
-CMD ["apache2-foreground"]

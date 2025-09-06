@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
-  dentdesk:
+  web:
     build: .
     ports:
-      - "8080:80"
+      - "8000:80"
     volumes:
       - .:/var/www/html
-    container_name: dentdesk_app
+    restart: unless-stopped
